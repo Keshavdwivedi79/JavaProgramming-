@@ -1,0 +1,72 @@
+Qustion1:- given a Binary tree check if it is balanced i.e. depth of the left and right sub-trees of every node differ by 1 or less.
+     Sample Input:-
+    10 true 20 true 40 false false true 50 false false true 30 true 60 false false true 73 false false
+
+    O/P:-
+    true
+
+
+class TreeNode {
+    int value;
+    TreeNode left, right;
+
+    public TreeNode(int value) {
+        this.value = value;
+        this.left = this.right = null;
+    }
+}
+
+class BinaryTree {
+    TreeNode root;
+
+    // Helper method to check if a binary tree is balanced
+    private boolean isBalanced(TreeNode node) {
+        if (node == null) {
+            return true;
+        }
+
+        int leftHeight = getHeight(node.left);
+        int rightHeight = getHeight(node.right);
+
+        // Check if the subtree rooted at the current node is balanced
+        if (Math.abs(leftHeight - rightHeight) <= 1 &&
+                isBalanced(node.left) &&
+                isBalanced(node.right)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // Helper method to calculate the height of a binary tree
+    private int getHeight(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftHeight = getHeight(node.left);
+        int rightHeight = getHeight(node.right);
+
+        // Return the height of the subtree rooted at the current node
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    // Method to check if the binary tree is balanced
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
+    public static void main(String[] args) {
+        // Sample Input
+        BinaryTree tree = new BinaryTree();
+        tree.root = new TreeNode(10);
+        tree.root.left = new TreeNode(20);
+        tree.root.right = new TreeNode(30);
+        tree.root.left.left = new TreeNode(40);
+        tree.root.left.right = new TreeNode(50);
+        tree.root.right.right = new TreeNode(73);
+
+        // Output
+        System.out.println(tree.isBalanced());  // Output: true
+    }
+}
